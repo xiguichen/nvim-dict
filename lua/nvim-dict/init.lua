@@ -62,11 +62,16 @@ local function show_word_meaning()
   api.nvim_buf_set_lines(buf, 0, -1, false, lines)
 end
 
--- Map the function to a hotkey
-api.nvim_set_keymap('n', '<leader>m', ':lua require("nvim-dict").show_word_meaning()<CR>', { noremap = true, silent = true })
+-- Setup function to configure the plugin
+local function setup(user_opts)
+  local opts = user_opts or {}
+  local keymap = opts.keymap or '<leader>m'
+  api.nvim_set_keymap('n', keymap, ':lua require("nvim-dict").show_word_meaning()<CR>', { noremap = true, silent = true })
+end
 
 -- Return the module
 return {
-  show_word_meaning = show_word_meaning
+  show_word_meaning = show_word_meaning,
+  setup = setup
 }
 
